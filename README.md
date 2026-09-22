@@ -9,7 +9,7 @@ JEV-Agent-Eval measures the one thing that actually matters for an agent-control
 The **complete corpus ships in this repository** — all 15,090 release cases, the counterfactual/metamorphic variants, and the 3,000-case holdout. A fresh clone contains everything needed to run the full evaluation. Nothing is downloaded at eval time; no dataset build step is required.
 
 ```bash
-git clone https://github.com/reetamdey-alt/jev-agent-eval.git
+git clone https://github.com/reetamdey-alt/jev-agent-eval-clean.git
 cd jev-agent-eval
 uv sync
 
@@ -23,6 +23,17 @@ uv run jev-eval run --config configs/smoke.yaml --live-only
 
 # ...or the complete 15,090-case release evaluation
 uv run jev-eval run --config configs/release.yaml --live-only
+
+# Tune request workers and rate limiting from the command line.
+# --concurrency is the maximum number of in-flight requests.
+# --rate-limit is the maximum number of new requests started per second.
+# --repeats 1 runs one pass instead of the release profile's default 3 repeats.
+uv run jev-eval run \
+  --config configs/release.yaml \
+  --live-only \
+  --concurrency 16 \
+  --rate-limit 10 \
+  --repeats 1
 
 # ...or the 3,000-case holdout suite
 uv run jev-eval run --config configs/holdout.yaml --live-only
