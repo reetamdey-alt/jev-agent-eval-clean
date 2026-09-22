@@ -1,10 +1,7 @@
 # JEV-Agent-Eval
 
-**A rigorous, security-first, fully-reproducible evaluation framework for JEV — the structured decision model that powers coding agents.**
 
-JEV-Agent-Eval measures the one thing that actually matters for an agent-control model: *does it make the right meta-decision, at the right time, with the right confidence?* Not "can it write code" — that's the agent's job. JEV decides **should a tool be called, which tool, is this progress real, should we stop, is this safe, do we need a human** — and this benchmark grades every one of those decisions against verifiable gold labels.
-
-## Run the real eval
+## Run the eval
 
 The **complete corpus ships in this repository** — all 15,090 release cases, the counterfactual/metamorphic variants, and the 3,000-case holdout. A fresh clone contains everything needed to run the full evaluation. Nothing is downloaded at eval time; no dataset build step is required.
 
