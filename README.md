@@ -10,7 +10,7 @@ The **complete corpus ships in this repository** — all 15,090 release cases, t
 
 ```bash
 git clone https://github.com/reetamdey-alt/jev-agent-eval-clean.git
-cd jev-agent-eval
+cd jev-agent-eval-clean
 uv sync
 
 export JEV_API_KEY="sk-..."
