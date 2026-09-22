@@ -1,0 +1,1 @@
+{"model": "jev-latest", "server_extra": {"region": "us-east"}, "answers": {"q1": {"type": "noul", "noul": 0.9, "vendor_field": "xyz"}}, "usage": {"input_tokens": 50, "output_tokens": 1, "cache_hit": true}}

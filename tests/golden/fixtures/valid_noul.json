@@ -1,0 +1,1 @@
+{"model": "jev-latest", "answers": {"q1": {"type": "noul", "noul": 0.8994, "probabilities": {"true": 0.8994, "false": 0.1006}, "confidence": 0.6511}}, "usage": {"input_tokens": 218, "output_tokens": 3}}

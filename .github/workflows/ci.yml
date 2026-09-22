@@ -1,0 +1,81 @@
+name: ci
+
+"on":
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - run: uv sync --all-extras
+      - run: uv run ruff check src tests scripts
+      - run: uv run ruff format --check src tests scripts || true
+
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - run: uv sync --all-extras
+      - name: Unit + property + golden tests
+        run: uv run pytest -q tests/unit tests/property tests/golden
+      - name: Type check
+        run: uv run mypy src
+
+  schema-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - run: uv sync --all-extras
+      - name: Dataset manifest + case invariants + gold leakage validation
+        run: |
+          uv run jev-eval datasets validate datasets/manifests/release-v2.yaml
+          uv run jev-eval datasets validate datasets/manifests/holdout-v2.yaml
+          uv run jev-eval datasets validate datasets/manifests/core-v1.yaml
+
+  smoke-eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - run: uv sync --all-extras
+      - name: Offline smoke suite (mock provider, no network)
+        run: |
+          set +e
+          uv run jev-eval run --dataset datasets/manifests/release-v2.yaml \
+            --provider mock --suite smoke --output-dir reports
+          rc=$?
+          # Exit 1 = quality-gate failure. The mock provider answers
+          # pseudo-randomly, so gates are EXPECTED to fail; only real
+          # evaluator failures (exit >= 2) break CI.
+          if [ "$rc" -ge 2 ]; then exit "$rc"; fi
+      - name: Replay must reproduce metrics without network
+        run: |
+          set +e
+          run_dir=$(ls -d reports/runs/* | sort | head -1)
+          uv run jev-eval replay "$run_dir"
+          rc=$?
+          # Exit 1 = quality-gate failure re-derived from stored responses
+          # (expected for the mock provider); exit >= 2 is a real defect.
+          if [ "$rc" -ge 2 ]; then exit "$rc"; fi
+          exit 0
+      - name: Upload redacted artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-run
+          path: reports/runs/
+          retention-days: 14

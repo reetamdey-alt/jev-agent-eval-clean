@@ -1,0 +1,13 @@
+{
+  "source": "AllenAI IFBench",
+  "upstream_repo": "https://github.com/allenai/IFBench",
+  "upstream_revision": "1c40f0c10d9b5c5c2f10a175a28007ebb64f7f4d",
+  "license": "Apache-2.0",
+  "expected_counts": {
+    "constraints": "25 classic + 58 OOD keys"
+  },
+  "downloaded_at": "2026-09-21T22:39:07Z",
+  "checksums": {
+    "IFBench_test.jsonl": "sha256:d2ada7da94a38cfe406351614c4e686846ed2da6d1b339db95fa5ead19554a4a"
+  }
+}

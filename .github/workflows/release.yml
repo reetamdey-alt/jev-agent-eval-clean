@@ -1,0 +1,56 @@
+name: release
+
+"on":
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  full-suite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - run: uv sync --all-extras
+      - name: Full test suite
+        run: uv run pytest -q
+      - name: Release eval suite (mock provider, offline)
+        run: |
+          set +e
+          uv run jev-eval run --dataset datasets/manifests/release-v2.yaml \
+            --provider mock --suite release --output-dir reports
+          rc=$?
+          # Exit 1 = quality-gate failure (expected for the mock provider);
+          # only real evaluator failures (exit >= 2) break CI.
+          if [ "$rc" -ge 2 ]; then exit "$rc"; fi
+          exit 0
+      - name: "Consistency suite (release policy: repeats=5)"
+        run: |
+          uv run jev-eval consistency --dataset datasets/manifests/release-v2.yaml \
+            --repeats 5 --max-cases 20
+      - name: Metamorphic suite
+        run: uv run jev-eval metamorphic --dataset datasets/manifests/release-v2.yaml
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-run
+          path: reports/
+          retention-days: 90
+
+  live-contract:
+    # Only when a JEV_API_KEY is explicitly provided at dispatch time.
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    environment: live-eval
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - run: uv sync --all-extras
+      - name: Contract suite against live JEV
+        env:
+          JEV_API_KEY: ${{ secrets.JEV_API_KEY }}
+        run: uv run jev-eval contract --live
+      # Upload only redacted artifacts; never echo secrets into logs.

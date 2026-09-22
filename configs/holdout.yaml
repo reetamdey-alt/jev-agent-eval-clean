@@ -1,0 +1,39 @@
+# v2 spec 76: holdout suite profile.
+provider:
+  base_url: "https://grid.ai.juspay.net/v1/systemone"
+  model: "jev-latest"
+  timeout_s: 30
+  connect_timeout_s: 5
+  read_timeout_s: 30
+  max_retries: 4
+  backoff_base_s: 0.5
+  backoff_max_s: 8
+  concurrency: 4
+  requests_per_second: 5
+
+run:
+  seed: 20260922
+  repeats: 1
+  fail_fast: false
+  cache: true
+  save_raw: true
+  redact_secrets: true
+
+scoring:
+  bootstrap_samples: 2000
+  confidence_level: 0.95
+  ece_bins: 10
+  multiclass_ece: true
+  probability_epsilon: 0.001
+
+reports:
+  output_dir: "reports"
+  formats:
+    - json
+    - markdown
+    - html
+
+thresholds:
+  transport_error_rate_max: 0.01
+  schema_error_rate_max: 0.01
+  p95_latency_ms_max: 2000

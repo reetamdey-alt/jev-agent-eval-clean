@@ -1,0 +1,25 @@
+__pycache__/
+*.py[cod]
+.venv/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+/reports/
+*.egg-info/
+.env
+
+# Scratch space — never commit.
+datasets/manifests/_tmp_review/
+README.old.md
+
+# Pinned upstream source snapshots ship with the repo (see
+# datasets/public/*/PROVENANCE.json) EXCEPT files GitHub refuses to store.
+# swebench_full_train parquet is 106 MB, over GitHub's hard 100 MB file limit.
+# To rebuild SWE-bench cases from source, re-fetch that one file:
+#   uv run python scripts/download_sources.py --only swebench
+datasets/public/swebench/swebench_full_train-00000-of-00001.parquet
+
+# Raw upstream clone cache — regenerable, never needed at eval time.
+datasets/public/_clones/

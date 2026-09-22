@@ -1,0 +1,115 @@
+{
+  "dataset": "release-v2",
+  "dataset_version": "2.0.0",
+  "seed": 20260922,
+  "total_base_cases": 15090,
+  "holdout_cases": 3000,
+  "variant_cases": 976,
+  "capability_counts": {
+    "claim_evidence": 1022,
+    "context_relevance": 827,
+    "goal_completion": 924,
+    "injection_resistance": 60,
+    "instruction_constraints": 587,
+    "model_escalation": 726,
+    "permission_gating": 50,
+    "progress_stuck": 822,
+    "prompt_injection": 1025,
+    "recovery": 724,
+    "state_transition": 629,
+    "stop_continue": 927,
+    "task_routing": 783,
+    "tool_necessity": 737,
+    "tool_relevance": 1019,
+    "tool_risk": 1522,
+    "tool_sufficiency": 286,
+    "trajectory_control": 924,
+    "uncertainty_abstention": 527,
+    "user_intent_alignment": 969
+  },
+  "source_mix": {
+    "bfcl": 995,
+    "ifbench": 241,
+    "ifeval": 308,
+    "legacy_v1": 240,
+    "osworld": 318,
+    "real_trace": 271,
+    "swebench": 1181,
+    "synthetic": 9978,
+    "tau2": 857,
+    "webarena_verified": 700,
+    "workarena": 1
+  },
+  "difficulty_mix": {
+    "easy": 698,
+    "expert": 1148,
+    "hard": 6120,
+    "medium": 6884,
+    "unassigned": 240
+  },
+  "case_store_checksum": "sha256:6d92650a0a044f65ca5cc589a51d50f4a4fa74aab94b1d9feb7d41a7e466e40b",
+  "variants_checksum": "sha256:0485e672f1b644c7abe99f157c688682f073e4f3c5c48a54d0de6db87a3afd81",
+  "holdout_checksum": "sha256:18e5cccd01a2f60a49a17a7c9c47d37288ae494c371fcd4b13cd33eae6cc70d8",
+  "public_source_revisions": {
+    "agentbench": {
+      "upstream_revision": "d1e4a10db08c87075c78972e48ecc182be03e2d5",
+      "downloaded_at": "2026-09-21T22:39:31Z",
+      "license": "MIT (code); data licenses per environment"
+    },
+    "bfcl": {
+      "upstream_revision": "6ea57973c7a6097fd7c5915698c54c17c5b1b6c8",
+      "downloaded_at": "2026-09-21T22:39:07Z",
+      "license": "Apache-2.0"
+    },
+    "ifbench": {
+      "upstream_revision": "1c40f0c10d9b5c5c2f10a175a28007ebb64f7f4d",
+      "downloaded_at": "2026-09-21T22:39:07Z",
+      "license": "Apache-2.0"
+    },
+    "ifeval": {
+      "hf_revision": "966cd89545d6b6acfd7638bc708b98261ca58e84",
+      "downloaded_at": "2026-09-21T22:40:31Z",
+      "license": "Apache-2.0"
+    },
+    "osworld": {
+      "upstream_revision": "b138d348256078fa634fc3b73567a7337c793e6b",
+      "downloaded_at": "2026-09-21T22:39:37Z",
+      "license": "Apache-2.0 (task definitions)"
+    },
+    "swebench": {
+      "downloaded_at": "2026-09-21T22:29:15Z",
+      "license": "MIT (dataset); see upstream for per-instance licenses"
+    },
+    "swebench_live": {
+      "hf_revision": "b51a86422e10cfd403beb4773e5a2947953e36ec",
+      "downloaded_at": "2026-09-21T22:40:30Z",
+      "license": "MIT"
+    },
+    "tau2": {
+      "upstream_revision": "b7ea9074c1cba482b30687fecdb5c8425fd6f619",
+      "downloaded_at": "2026-09-21T22:39:33Z",
+      "license": "MIT"
+    },
+    "terminal_bench": {
+      "upstream_revision": "2fd12b88aafdd04a52c298e3940bcb189f9766d6",
+      "downloaded_at": "2026-09-21T22:40:08Z",
+      "license": "Apache-2.0"
+    },
+    "tuabench": {
+      "upstream_revision": "3497fd320abcafaf4797424192c891a593fd7964",
+      "downloaded_at": "2026-09-21T22:39:26Z",
+      "license": "See upstream LICENSE (NOASSERTION)"
+    },
+    "webarena_verified": {
+      "upstream_revision": "6473f72db5dcefc97b5725b59e734504edc28a21",
+      "downloaded_at": "2026-09-21T22:39:33Z",
+      "license": "Apache-2.0"
+    },
+    "workarena": {
+      "upstream_revision": "a772230a94cf1caf4166b8ead3983f3b3786455b",
+      "downloaded_at": "2026-09-21T22:39:39Z",
+      "license": "MIT (code); ServiceNow data terms upstream"
+    }
+  },
+  "question_pack_version": "2.0"
+}

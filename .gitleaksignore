@@ -1,0 +1,6 @@
+# Synthetic fixtures used by secret-redaction unit tests.
+cdadcee8d6b7df1325de584c3a946ba9056b149a:tests/unit/test_core.py:github-pat:300
+cdadcee8d6b7df1325de584c3a946ba9056b149a:tests/unit/test_core.py:jwt:188
+cdadcee8d6b7df1325de584c3a946ba9056b149a:tests/unit/test_core.py:generic-api-key:180
+cdadcee8d6b7df1325de584c3a946ba9056b149a:tests/unit/test_core.py:generic-api-key:208
+cdadcee8d6b7df1325de584c3a946ba9056b149a:tests/unit/test_core.py:generic-api-key:213

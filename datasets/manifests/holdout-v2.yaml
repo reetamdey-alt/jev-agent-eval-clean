@@ -1,0 +1,15 @@
+# holdout-v2 manifest: private holdout (spec 7).
+name: holdout-v2
+version: 2.0.0
+schema_version: '2.0'
+license: internal
+question_pack_version: '2.0'
+description: Private holdout split from the release-v2 build (spec 7).
+cases:
+  - path: holdout/holdout.jsonl
+    count: 3000
+sources:
+  - name: holdout
+    reference: scripts/build_cases.py stratified holdout split
+integrity:
+  holdout/holdout.jsonl: "sha256:18e5cccd01a2f60a49a17a7c9c47d37288ae494c371fcd4b13cd33eae6cc70d8"

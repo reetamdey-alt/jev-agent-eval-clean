@@ -1,0 +1,26 @@
+# release-v2.0 dataset manifest (spec 50, 65).
+name: release-v2
+version: 2.0.0
+schema_version: '2.0'
+license: internal
+question_pack_version: '2.0'
+description: >
+  v2 canonical case store: legacy v1 core, real anonymized agent traces,
+  13 public-source transformations, deterministic synthetic generator
+  families. Built by scripts/build_cases.py, seed 20260922.
+cases:
+  - path: release-v2/cases.jsonl
+    count: 15090
+sources:
+  - name: release-v2
+    reference: scripts/build_cases.py
+  - name: public
+    reference: datasets/public/* (pinned revisions in each PROVENANCE.json)
+  - name: real-traces
+    reference: anonymized coding-agent transcripts (spec 29 ingestion)
+  - name: legacy-v1-core
+    reference: datasets/internal/*.jsonl migrated per spec 77
+integrity:
+  release-v2/cases.jsonl: "sha256:6d92650a0a044f65ca5cc589a51d50f4a4fa74aab94b1d9feb7d41a7e466e40b"
+  release-v2/variants.jsonl: "sha256:4577169f815aa60c31c3cffb331e2876b93a8fc5d47103dd2e9b0668895214cb"
+  holdout/holdout.jsonl: "sha256:18e5cccd01a2f60a49a17a7c9c47d37288ae494c371fcd4b13cd33eae6cc70d8"

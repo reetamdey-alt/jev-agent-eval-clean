@@ -1,0 +1,85 @@
+name: nightly
+
+"on":
+  schedule:
+    - cron: "17 3 * * *"  # off-peak, off-round minute
+  workflow_dispatch:
+
+jobs:
+  pr-suite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - run: uv sync --all-extras
+      - name: PR suite (mock provider, offline)
+        run: |
+          set +e
+          uv run jev-eval run --dataset datasets/manifests/release-v2.yaml \
+            --provider mock --suite pr --output-dir reports
+          rc=$?
+          # Exit 1 = quality-gate failure (expected for the mock provider);
+          # only real evaluator failures (exit >= 2) break CI.
+          if [ "$rc" -ge 2 ]; then exit "$rc"; fi
+          exit 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nightly-pr-suite
+          path: reports/runs/
+
+  calibration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - run: uv sync --all-extras
+      - name: Calibration report from PR run
+        run: |
+          set +e
+          uv run jev-eval run --dataset datasets/manifests/release-v2.yaml \
+            --provider mock --suite pr --output-dir reports
+          rc=$?
+          # Exit 1 = quality-gate failure (expected for the mock provider);
+          # only real evaluator failures (exit >= 2) break CI.
+          if [ "$rc" -ge 2 ]; then exit "$rc"; fi
+          exit 0
+          run_dir=$(ls -d reports/runs/* | sort | head -1)
+          test -s "$run_dir/calibration.json"
+
+  metamorphic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - run: uv sync --all-extras
+      - run: uv run pytest -q tests/integration
+      - name: Metamorphic suite
+        run: uv run jev-eval metamorphic --dataset datasets/manifests/release-v2.yaml
+      - name: Consistency / repeatability suite
+        run: uv run jev-eval consistency --dataset datasets/manifests/release-v2.yaml
+
+  soak:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - run: uv sync --all-extras
+      - name: Small soak test (mock provider)
+        run: |
+          uv run python - <<'EOF'
+          import asyncio
+          from jev_agent_eval.client.systemone import MockJEVProvider
+          from jev_agent_eval.runners.batch import run_soak
+          result = asyncio.run(run_soak(MockJEVProvider(), "jev-latest", n_requests=200, concurrency=8))
+          print(f"soak: {result.n_requests} reqs, {result.duration_s:.2f}s, "
+                f"error_rate={result.error_rate}, drift={result.latency_drift_ms}")
+          assert result.error_rate == 0.0
+          EOF

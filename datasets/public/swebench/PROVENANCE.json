@@ -1,0 +1,18 @@
+{
+  "source": "SWE-bench",
+  "upstream_repo": "https://github.com/SWE-bench/SWE-bench",
+  "upstream_url": "https://www.swebench.com/",
+  "hf_dataset": "princeton-nlp/SWE-bench, princeton-nlp/SWE-bench_Verified",
+  "license": "MIT (dataset); see upstream for per-instance licenses",
+  "expected_counts": {
+    "full": 2294,
+    "verified": 500
+  },
+  "downloaded_at": "2026-09-21T22:29:15Z",
+  "checksums": {
+    "swebench_full_dev-00000-of-00001.parquet": "sha256:d758d54540aa4140d0274ed0cc93b8288aa6f323c3c603e2557e7666a47fc41b",
+    "swebench_full_test-00000-of-00001.parquet": "sha256:db4f70ef735b3162c74801ddcdf8d7bae8d704193788c6d844f898c20b571cbb",
+    "swebench_full_train-00000-of-00001.parquet": "sha256:0ba403a7060af657e1f0476937a703726c07da15b759836694b16e553705a10f",
+    "swebench_verified_test-00000-of-00001.parquet": "sha256:a45b1fe4e2f0c8390b2b2938ac83e92ed5979000856808f3679c07812e9e6dcd"
+  }
+}

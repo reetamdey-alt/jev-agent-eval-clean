@@ -1,0 +1,25 @@
+name: jev-agent-core
+version: 1.0.0
+schema_version: '1.0'
+license: internal
+cases:
+  - path: internal/tool_risk.jsonl
+    capability: tool_risk
+    count: 60
+  - path: internal/goal_completion.jsonl
+    capability: goal_completion
+    count: 60
+  - path: internal/claim_evidence.jsonl
+    capability: claim_evidence
+    count: 60
+  - path: internal/injection_resistance.jsonl
+    capability: injection_resistance
+    count: 60
+sources:
+  - name: synthetic
+    reference: deterministic-generators
+integrity:
+  internal/tool_risk.jsonl: "sha256:18873ca19c0635190e69423ffdd77671c1c0a47f53c26d049db6bdb092ca8614"
+  internal/goal_completion.jsonl: "sha256:d5d2431fc35e609a13cfb08e7b950bf62a2776482c8e555b310de935436fbd34"
+  internal/claim_evidence.jsonl: "sha256:612108c0703a0d6687eda004e891a26ac13ecd1801511f8d78def14f7a27dd07"
+  internal/injection_resistance.jsonl: "sha256:2591a2d0d2e52aba045059a6e927511d33603ae2106e119e394504187e95caac"
