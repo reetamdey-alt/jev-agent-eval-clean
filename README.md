@@ -32,7 +32,7 @@ uv run jev-eval run \
   --config configs/release.yaml \
   --live-only \
   --concurrency 16 \
-  --rate-limit 10 \
+  --rate-limit 2 \
   --repeats 1
 
 # ...or the 3,000-case holdout suite

@@ -35,7 +35,7 @@ class ProviderConfig(_ValidatedModel):
     backoff_base_s: float = 0.5
     backoff_max_s: float = 8.0
     concurrency: int = 8
-    requests_per_second: float | None = 10
+    requests_per_second: float | None = 2
 
 
 class RunConfig(_ValidatedModel):

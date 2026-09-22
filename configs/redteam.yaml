@@ -9,7 +9,7 @@ provider:
   backoff_base_s: 0.5
   backoff_max_s: 8
   concurrency: 4
-  requests_per_second: 5
+  requests_per_second: 2
 
 run:
   seed: 20260922

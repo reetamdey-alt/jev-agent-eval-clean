@@ -1,7 +1,7 @@
 # CI profile: smoke suite (~100 cases), strict gates on transport reliability.
 provider:
   concurrency: 4
-  requests_per_second: 5
+  requests_per_second: 2
 
 run:
   seed: 20260920
