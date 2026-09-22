@@ -19,16 +19,17 @@ export JEV_API_KEY="sk-..."
 uv run jev-eval datasets validate datasets/manifests/release-v2.yaml
 
 # 300-case proportional smoke across all 20 capabilities
-uv run jev-eval run --config configs/smoke.yaml --live-only
+uv run jev-eval run --suite smoke --config configs/smoke.yaml --live-only
 
 # ...or the complete 15,090-case release evaluation
-uv run jev-eval run --config configs/release.yaml --live-only
+uv run jev-eval run --suite release --config configs/release.yaml --live-only
 
 # Tune request workers and rate limiting from the command line.
 # --concurrency is the maximum number of in-flight requests.
 # --rate-limit is the maximum number of new requests started per second.
 # --repeats 1 runs one pass instead of the release profile's default 3 repeats.
 uv run jev-eval run \
+  --suite release \
   --config configs/release.yaml \
   --live-only \
   --concurrency 16 \
@@ -36,7 +37,7 @@ uv run jev-eval run \
   --repeats 1
 
 # ...or the 3,000-case holdout suite
-uv run jev-eval run --config configs/holdout.yaml --live-only
+uv run jev-eval run --suite holdout --config configs/holdout.yaml --live-only
 ```
 
 The run commands call the real JEV API. They exit `0` when all quality gates pass and `1` when a model-quality gate fails. Inspect the generated run with:
